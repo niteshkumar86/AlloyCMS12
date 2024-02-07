@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace AlloyCMS12.Models.Pages
 {
     /// <summary>
@@ -15,5 +17,20 @@ namespace AlloyCMS12.Models.Pages
 
             VisibleInMenu = false;
         }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 340)]
+        public virtual string ArticleName { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 350)]
+        public virtual string SearchName { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 360)]
+        public virtual int Price { get; set; }
     }
 }

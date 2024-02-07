@@ -27,5 +27,20 @@ namespace AlloyCMS12.Models.Pages
         [CultureSpecific]
         [AllowedTypes(new[] { typeof(IContentData) }, new[] { typeof(JumbotronBlock) })]
         public virtual ContentArea RelatedContentArea { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 340)]
+        public virtual string ProductName { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 350)]
+        public virtual string SearchName { get; set; }
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 360)]
+        public virtual int Price { get; set; }
     }
 }
