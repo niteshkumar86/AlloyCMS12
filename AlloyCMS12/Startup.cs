@@ -29,6 +29,7 @@ namespace AlloyCMS12
                 .AddCmsAspNetIdentity<ApplicationUser>()
                 .AddCms()
                 .AddAlloy()
+                .AddFind()
                 .AddAdminUserRegistration()
                 .AddEmbeddedLocalization<Startup>();
 

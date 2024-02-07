@@ -14,6 +14,8 @@
   
   <ItemGroup>
     <PackageReference Include="EPiServer.CMS" Version="12.22.2" />
+    <PackageReference Include="EPiServer.Find" Version="15.0.3" />
+    <PackageReference Include="EPiServer.Find.Cms" Version="15.0.3" />
     <PackageReference Include="Wangkanai.Detection" Version="5.2.0" />
   </ItemGroup>
   
