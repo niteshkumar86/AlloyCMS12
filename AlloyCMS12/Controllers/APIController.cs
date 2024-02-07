@@ -78,13 +78,18 @@ namespace AlloyCMS12.Controllers
 
 
             var multiQuery = query
-                .Select(s => new SearchResultModel { SearchName = s.SearchName, XYZ = s.Price, ProductName = s.ProductName, IsProductPage = true })
+                .Select(s => new SearchResultModel { SearchName = s.SearchName, Price = s.Price, ProductName = s.ProductName, IsProductPage = true })
                 .IncludeType<SearchResultModel, ArticlePage>(x => new SearchResultModel()
             {
-                XYZ = x.Price,
+                Price = x.Price,
                 SearchName = x.SearchName,
                 ProductName = x.ArticleName,
                 IsArticlePage = true
+            }).IncludeType<SearchResultModel, NewsPage>(x => new SearchResultModel()
+            {
+                Price = x.JustNumericValue, //do not filter by price value
+                SearchName = x.Name,
+                ProductName = x.Name
             });
 
             var multiQueryResult = multiQuery.GetResult().ToList();
@@ -104,7 +109,7 @@ namespace AlloyCMS12.Controllers
     public class SearchResultModel
     {
         public string SearchName { get; set; }
-        public int XYZ { get; set; }
+        public int Price { get; set; }
         public string ProductName { get; set; }
 
         public bool IsProductPage { get; set; }

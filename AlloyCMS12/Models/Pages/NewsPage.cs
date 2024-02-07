@@ -31,5 +31,11 @@ namespace AlloyCMS12.Models.Pages
             NewsList.PageTypeFilter = typeof(ArticlePage).GetPageType();
             NewsList.SortOrder = FilterSortOrder.PublishedDescending;
         }
+
+
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 360)]
+        public virtual int JustNumericValue { get; set; }
     }
 }
