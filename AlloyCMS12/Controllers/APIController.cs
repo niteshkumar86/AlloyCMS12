@@ -67,19 +67,47 @@ namespace AlloyCMS12.Controllers
             .Take(100)
             .Track();
 
-            //var result = query.IncludeType<HomePage, BuildOnYourLotHomePage>(x => new HomePage()
+            //var multiQueryResult = query.IncludeType<ProductPage, ArticlePage>(x => new ProductPage()
             //{
-            //    Price = x.Price,
-            //    City = x.City,
-            //    ACL = x.ACL,
-            //    PlanName = x.PlanName
-            //}).GetResult();  //throw error and suggest using GetContentResult()
-            //.GetContentResult(); is not a method in ISearch but ITypeSearch 
+            //    Price = x.Price,                
+            //    SearchName = x.SearchName,
+            //    ProductName = x.ArticleName
+            //}).GetResult();  
+            //EPiServer.Core.EPiServerException: 'Please use GetContentResult extension method for getting results with content types'
+            //.GetContentResult(); is not a method in ISearch but ITypeSearch
 
-            var result = query.GetContentResult()
-                .Select(s=> new { SearchName = s.SearchName, Price = s.Price, ProductName = s.ProductName })
-                .ToList();
-            return new JsonResult(result);
+
+            var multiQuery = query
+                .Select(s => new SearchResultModel { SearchName = s.SearchName, XYZ = s.Price, ProductName = s.ProductName, IsProductPage = true })
+                .IncludeType<SearchResultModel, ArticlePage>(x => new SearchResultModel()
+            {
+                XYZ = x.Price,
+                SearchName = x.SearchName,
+                ProductName = x.ArticleName,
+                IsArticlePage = true
+            });
+
+            var multiQueryResult = multiQuery.GetResult().ToList();
+            return new JsonResult(multiQueryResult);
+            //Unable to cast object of type 'AlloyCMS12.Models.Pages.ProductPage' to type 'EPiServer.Find.Cms.ContentInLanguageReference'.
+
+
+
+
+            //var result = query.GetContentResult()
+            //    .Select(s=> new SearchResultModel { SearchName = s.SearchName, Price = s.Price, ProductName = s.ProductName })
+            //    .ToList();
+            //return new JsonResult(result);
         }
+    }
+
+    public class SearchResultModel
+    {
+        public string SearchName { get; set; }
+        public int XYZ { get; set; }
+        public string ProductName { get; set; }
+
+        public bool IsProductPage { get; set; }
+        public bool IsArticlePage { get; set;}
     }
 }
